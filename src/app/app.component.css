@@ -1,0 +1,47 @@
+.turtles {
+  position: relative;
+  overflow: hidden;
+  height: 258px;
+}
+
+.firstTurtle {
+  position: absolute;
+  left: -30%;
+  top: 0px;
+  animation: move 5s linear 5s infinite;
+  width: 150px;
+}
+
+.secondTurtle {
+  position: absolute;
+  left: -30%;
+  top: 70px;
+  animation: move 8s linear 0s infinite;
+  width: 150px;
+}
+
+.thirdTurtle {
+  top: 140px;
+  left: -30%;
+  position: absolute;
+  animation: move 11s linear 1s infinite;
+  width: 150px;
+}
+  
+@keyframes move {
+  from {
+    left: -30%;
+  }
+  to {
+    left: 100%;
+  }
+}
+  
+@keyframes moveFirst {
+  from {
+    left: 50%;
+  }
+  to {
+    left: 100%;
+  }
+}

@@ -1,0 +1,23 @@
+<app-multiple-choises
+    [options]="OBSERVATION_COL_NAMES" 
+    (choicesChangeEmiter)="groupSelectionChanged($event)"
+    [resetEventEmitter]="resetEventSender">
+</app-multiple-choises>
+
+<app-multiple-choises *ngIf="groupSelection && groupSelection.includes('Result time')"
+    label="Result time as"
+    [options]="timeGroupOptions" 
+    (choicesChangeEmiter)="groupTimeSelectionChanged($event)">
+</app-multiple-choises>
+
+<div *ngIf="groupSelection && groupSelection.length > 0">
+    <app-select *ngFor="let c of otherColumns"
+        [label]="c"
+        [options]="isDiscrete(c) ? discreteAggregations : (c == 'Result time' ? timeAggregations : numericAggregations)"
+        (selectionChange)="aggregationSelectionChanged(c, $event)"
+        [resetEventEmitter]="resetEventSender">
+    </app-select>
+</div>
+
+<button *ngIf="groupSelection" mat-button type="submit" (click)="submit()" color="primary">Submit</button>
+<button *ngIf="sendedStatement" mat-button type="submit" (click)="reset()" color="warn" style="margin-left: 4px;">Reset</button>

@@ -1,0 +1,29 @@
+
+<mat-form-field appearance="fill" class="multi-choises">
+    <mat-label>{{label}}</mat-label>
+    <mat-chip-list #chipList aria-label="Columns">
+      <mat-chip
+        *ngFor="let c of choices"
+        (removed)="remove(c)">
+        {{c}}
+        <button matChipRemove>
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </mat-chip>
+      <input
+        placeholder="Select column"
+        #optionInput
+        [formControl]="selectCtrl"
+        [matAutocomplete]="auto"
+        [matChipInputFor]="chipList"
+        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+        (matChipInputTokenEnd)="add($event)">
+    </mat-chip-list>
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+        {{option}}
+      </mat-option>
+    </mat-autocomplete>
+</mat-form-field>
+  
+  

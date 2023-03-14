@@ -1,0 +1,107 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+th {
+    text-align: left;
+}
+
+td {
+    text-align: center;
+}
+
+th, td {
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+tr:nth-child(even) { /* even */
+    background-color: lightgrey;
+}
+
+input {
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 36px;
+    padding-right: 16px;
+    padding-left: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: baseline;
+}
+
+input[type=file] {
+    opacity: 0;
+    z-index: -1;
+    position: absolute;
+    top: -1px;
+    width: 0.1px;
+    height: 0.1px;
+}
+
+
+.mat-button, #fileupload-button {
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 36px;
+    padding-right: 16px;
+    padding-left: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: baseline;
+    background: lightgray;
+}
+
+.mat-button:hover, #fileupload-button:hover{
+    background: gray;
+    border: 1px solid darkgray;
+}
+
+mat-panel-title {
+    width: 100px;
+}
+
+h1.mat-dialog-title {
+    font-size: xx-large;
+}
+
+
+canvas.chart {
+    max-width: 100%;
+    max-height: 100%;
+    width: 96%;
+}
+
+
+.vertically-centered {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.vertical-center-box {
+    position: relative;
+    display: table;
+}
+
+
+/* Mat select width should fir content */
+.cdk-overlay-pane {
+    min-width: 201px !important;
+    max-width: 100% !important;
+    width: fit-content !important;
+}
+
+
+.ngb-dp-arrow-btn, .ngb-tp-chevron {
+    color: lightgray;
+}
+
+.ngb-dp-weekday {
+    color: black !important;
+}

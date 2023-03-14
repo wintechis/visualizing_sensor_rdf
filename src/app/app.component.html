@@ -1,0 +1,147 @@
+
+
+<mat-toolbar>
+  <!--File upload-->
+  <form>
+    <input
+      type="file" accept=".ttl" id="fileupload"
+      (change)="fileSelector($event)"/>
+    <label 
+      for="fileupload"
+      id="fileupload-button"
+      matTooltip="Upload a Turtle file (.ttl)">
+      Upload file
+    </label>
+  </form>
+
+  <button
+    mat-button
+    (click)="openDataUrlDialog()"
+    matTooltip="Register api link that delivers Turtle data (.ttl)"
+    style="margin-left: 4px;">
+    Pass URL
+  </button>
+  
+  <!--Summary-->
+  <app-summary
+    *ngIf="summary"
+    [summary]="summary"
+    [exampleObservations]="data!.slice(0, 5)"
+    matTooltip="Summarise all the Turtle data's observations."
+    style="margin-left: 4px;">
+  </app-summary>
+
+</mat-toolbar>
+<mat-progress-bar *ngIf="isParsing" mode="indeterminate"></mat-progress-bar>
+<mat-spinner *ngIf="isParsing" style="margin: auto; top: 36%; z-index: 10;"></mat-spinner>
+
+<div *ngIf="showTurtles" class="turtles">
+  <div class="firstTurtle"><img src="/assets/Turtle.png" alt="image"></div>
+  <div class="secondTurtle"><img src="/assets/Turtle.png" alt="image"></div>
+  <div class="thirdTurtle"><img src="/assets/Turtle.png" alt="image"></div>
+</div>
+
+<!--
+  Preview
+-->
+<div *ngIf="transformedFirstFive" class="vertical-center-box" style="margin-bottom: 16px;">
+  <div class="vertically-centered">
+    <app-preview
+      [columns]="selectedObservations ? selectedObservations : transformedDataColumns"
+      [data]="transformedFirstFive">
+    </app-preview>
+  </div>
+
+  <div class="vertically-centered">
+    <div style="margin-left: 4px;">
+      <button mat-button
+        color="primary"
+        (click)="showDataPopUp()"
+        matTooltip="Show all selected observations"
+        matTooltipPosition="above"
+        style="margin-top: 4px; margin-bottom: 4px; width: 100%;">
+        Show data
+      </button><br>
+      <button mat-button
+        color="warn"
+        (click)="resetSelection()"
+        matTooltip="Reset the current selection">
+        Reset selection
+      </button>
+    </div>
+  </div>
+</div>
+
+<!--
+  Selection
+--> 
+<mat-accordion *ngIf="data">
+  <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>Filter</mat-panel-title>
+      <mat-panel-description>Select observations variables</mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <app-filter
+      id="selection-filter"
+      [data]="transformedData"
+      (filterStatementsEmitter)="recieveFilterStatements($event)"
+      [resetEventEmitter]="resetEventSender">
+    </app-filter>
+
+    <mat-action-row>
+      <button mat-button color="primary" (click)="nextStep()">Next</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>Group by - aggregate</mat-panel-title>
+      <mat-panel-description>Group and aggregate data</mat-panel-description>
+    </mat-expansion-panel-header>
+
+  <app-groupby-aggregate 
+    (groupByStatementEmitter)="recieveGroupByStatement($event)"
+    [resetEventEmitter]="resetEventSender">
+  </app-groupby-aggregate>
+
+    <mat-action-row>
+      <button mat-button color="warn" (click)="prevStep()">Previous</button>
+      <button mat-button color="primary" (click)="nextStep()">Next</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>Select</mat-panel-title>
+      <mat-panel-description>Select observation variables</mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <app-multiple-choises
+      [options]="transformedDataColumns"
+      (choicesChangeEmiter)="recieveSelectStatement($event)"
+      [resetEventEmitter]="resetEventSender">
+    </app-multiple-choises>
+
+    <br>
+    <app-select
+      *ngIf="possibleCharts"
+      label="Choose chart type"
+      [options]="possibleCharts"
+      (selectionChange)="chooseChart($event)"> <!--[resetEventEmitter]="resetEventSender"-->
+    </app-select>
+
+    <div><mat-checkbox *ngIf="possibleCharts" [(ngModel)]="resetAfterShowingChart">Reset after submit?</mat-checkbox></div>
+
+    <mat-action-row>
+      <button mat-button color="warn" (click)="prevStep()">Previous</button>
+      <button mat-button color="primary" (click)="nextStep()">Close</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+
+</mat-accordion>
+
+
+<div [style]="'height: ' + (step < 3 ? 12 : 2) + 'px;'"></div>
+
+<app-chart-grid-layout [chartData]="chartData"></app-chart-grid-layout>

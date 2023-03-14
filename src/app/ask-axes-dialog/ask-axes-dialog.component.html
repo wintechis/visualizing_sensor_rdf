@@ -1,0 +1,34 @@
+<h2 mat-dialog-title>Select axes</h2>
+<mat-dialog-content>
+    <app-select *ngIf="data.xAxisOptions"
+     label="X-axis"
+     [options]="data.xAxisOptions"
+     [defaultChoice]="x"
+     canNotReset="true"
+     (selectionChange)="selectedX($event)">
+    </app-select>
+    <app-select *ngIf="data.yAxisOptions"
+     label="Y-axis"
+     [options]="data.yAxisOptions"
+     [defaultChoice]="y"
+     canNotReset="true"
+     (selectionChange)="selectedY($event)">
+    </app-select>
+    <app-select *ngIf="data.zAxisOptions"
+     label="Z-axis"
+     [defaultChoice]="z"
+     [options]="data.zAxisOptions"
+     [canNotReset]="data.zAxisRequired"
+     (selectionChange)="selectedZ($event)">
+    </app-select>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="undefined">Cancel</button>
+  <button
+    *ngIf="(!data.xAxisOptions || x) && (!data.yAxisOptions || y) && (!data.zAxisOptions || z || !data.zAxisRequired)"
+    mat-button
+    [mat-dialog-close]="{xAxis:x, yAxis:y, zAxis:z}"
+    cdkFocusInitial>
+    Submit
+</button>
+</mat-dialog-actions>

@@ -1,0 +1,9 @@
+<table> <!-- *ngIf="!buffered"-->
+    <tr><th *ngFor="let col of columns"
+        [matTooltip]="getTooltipTextFor(col)">
+        {{col}}
+    </th></tr>
+    <tr *ngFor="let row of data">
+        <td *ngFor="let col of row">{{getData(col)}}</td>
+    </tr>
+</table>

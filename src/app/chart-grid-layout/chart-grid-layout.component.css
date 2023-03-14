@@ -1,0 +1,23 @@
+.remove-handle {
+    width: 20px;
+    position: absolute;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    top: 0;
+    right: 0;
+}
+
+.remove-handle::after {
+    content: 'x';
+    font-weight: bold;
+}
+
+#grid-enlarge-placeholder {
+    height: 32%;
+    /*transition: all .6s ease-in-out;*/
+}
+
+:host ::ng-deep .ktd-grid-item-placeholder {
+    background-color: lightgray;
+}

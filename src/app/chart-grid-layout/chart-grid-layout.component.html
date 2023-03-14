@@ -1,0 +1,22 @@
+<ktd-grid [cols]="cols"
+          [rowHeight]="rowHeight"
+          [layout]="layout"
+          (layoutUpdated)="onLayoutUpdated($event)">
+    <ktd-grid-item *ngFor="let item of layout; trackBy:trackById; index as i;" [id]="item.id" style="border: solid #f5f5f5;">
+
+        <div class="remove-handle" (mousedown)="stopEventPropagation($event)" (click)="removeChart(item.id)"></div>
+        <a href="#" (click)="downloadCanvas(getChartId(i), $event)" style="color: black; position: absolute; bottom: 0px;">Download</a>
+
+        <canvas baseChart
+            [id]="getChartId(i)"
+            [data]="charts[i].chartData"
+            [type]="getChartType(charts[i])"
+            [options]="charts[i].chartOptions">
+        </canvas>
+
+    </ktd-grid-item>
+</ktd-grid>
+
+
+<!--placeholder to enlarge chart grid tiles-->
+<div id="grid-enlarge-placeholder"></div>

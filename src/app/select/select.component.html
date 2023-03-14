@@ -1,0 +1,9 @@
+<mat-form-field appearance="fill">
+    <mat-label>{{label}}</mat-label>
+    <mat-select [value]="defaultChoice" (selectionChange)="change($event)"> <!--[(value)]="defaultChoice" -->
+      <mat-option *ngIf="!canNotReset">None</mat-option>
+      <mat-option *ngFor="let o of options" [value]="o">
+        {{o}}
+      </mat-option>
+    </mat-select>
+</mat-form-field>

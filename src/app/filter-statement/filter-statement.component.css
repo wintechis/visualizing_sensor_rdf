@@ -1,0 +1,54 @@
+mat-form-field {
+    width: fit-content !important;
+    margin-bottom: 6px !important;
+}
+
+:host ::ng-deep .mat-form-field-wrapper {
+    padding: 0;
+}
+
+:host ::ng-deep .mat-form-field-underline {
+    visibility: hidden;
+}
+
+:host ::ng-deep fieldset {
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+:host ::ng-deep .btn-link, ::ng-deep .ngb-tp-input {
+    padding: 0;
+}
+
+button.date {
+    height: 45px;
+    background-color: rgba(0,0,0,.04);
+    border: none;
+    font-weight: 450;
+}
+
+:host ::ng-deep ngb-timepicker {
+    border: none !important;
+}
+
+:host ::ng-deep .ng-pristine, :host ::ng-deep .ng-dirty {
+    height: 45px;
+    width: 116px;
+    border: none;
+    font-weight: normal;
+    font-size: 14px;
+}
+
+:host ::ng-deep .ngb-tp-input-container {
+    width: 32px;
+    
+}
+
+:host ::ng-deep .ngb-tp-input {
+    font-size: 14px;
+}
+
+:host ::ng-deep .mat-autocomplete-trigger, :host ::ng-deep .mat-input-element{
+    height: fit-content;
+}
+

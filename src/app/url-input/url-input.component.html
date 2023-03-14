@@ -1,0 +1,32 @@
+<h2 mat-dialog-title>Select URL</h2>
+<mat-dialog-content>
+  <table>
+    <tr>
+      <td><mat-checkbox [(ngModel)]="autoUpdate">Auto update?</mat-checkbox></td>
+      <td *ngIf="autoUpdate"><mat-checkbox [(ngModel)]="autoUpdateByTimeIntervall">Update by time intervall?</mat-checkbox></td>
+    </tr>
+    <tr *ngIf="autoUpdate"><td colspan="2" style="max-width: 340px; text-align: left;">
+      In case of heavy data loads &quot;Update by time intervall&quot; would lead to a bad user experience.
+      If &quot;Auto update&quot; is selected but not &quot;Update by time intervall&quot;, the data is update everytime after a chart is created.
+    </td></tr>
+    <tr><td>Insert URL</td><td style="text-align: left;"><input matInput type="url" [(ngModel)]="url"></td><br></tr>
+    <tr *ngIf="autoUpdate && autoUpdateByTimeIntervall" style="background-color: transparent;">
+      <td>Update every</td>
+      <td style="text-align: left;"><input matInput type="number" min="1" step="1" [(ngModel)]="seconds"> seconds.</td>
+    </tr>
+  </table>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="undefined">Cancel</button>
+  <button *ngIf="url && seconds && seconds > 0"
+    mat-button
+    [mat-dialog-close]="{
+      url:url,
+      autoUpdate:autoUpdate,
+      autoUpdateByTimeIntervall:autoUpdateByTimeIntervall,
+      updateRateSeconds:seconds
+    }"
+    cdkFocusInitial>
+    Submit
+  </button>
+</mat-dialog-actions>

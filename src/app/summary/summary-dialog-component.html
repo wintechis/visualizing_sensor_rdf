@@ -1,0 +1,119 @@
+<h1 mat-dialog-title>Summary</h1>
+
+<div mat-dialog-content>
+  <table>
+    <tr></tr>
+    <tr>
+      <th>Number of observations</th>
+      <th *ngIf="summary.timespan">From</th>
+      <th *ngIf="summary.timespan">To</th>
+      <th *ngIf="summary.timespan">Duration</th>
+    </tr>
+    <tr>
+      <td>{{summary.numberOfObservations}}</td>
+      <td *ngIf="summary.timespan">{{dateToString(summary.timespan.start)}}</td>    
+      <td *ngIf="summary.timespan">{{dateToString(summary.timespan.end)}}</td>
+      <td *ngIf="summary.timespan"><span *ngFor="let x of getIntervall()">{{x[0]}}: {{x[1]}}<br></span></td>
+    </tr>
+  </table>
+  
+  <br>
+  <mat-divider></mat-divider>
+  <br>
+  
+  <!--
+    Example data
+  -->
+  
+  <h2>Preview (example observations)</h2>
+  <app-preview
+    *ngIf="exampleObservations"
+    [columns]="OBSERVATION_COL_NAMES"
+    [data]="exampleObservations">
+  </app-preview>
+  
+  <!--
+    Missing values
+  -->
+  <br>
+  <div *ngIf="summary.missingValues">
+    <h2>Summary of missing values</h2>
+    <table>
+      <tr><th></th><th>Number of missing values</th></tr>
+      <!--numericalValue-->
+      <tr>
+        <th>{{OBSERVATION_NAMES.numericalValue}}</th>
+        <td>{{summary.missingValues.numericalValue}}</td>
+      </tr>
+      <!--unit-->
+      <tr>
+        <th>{{OBSERVATION_NAMES.unit}}</th>
+        <td>{{summary.missingValues.unit}}</td>
+      </tr>
+      <!--madeBySensor-->
+      <tr>
+        <th>{{OBSERVATION_NAMES.madeBySensor}}</th>
+        <td>{{summary.missingValues.madeBySensor}}</td>
+      </tr>
+      <!--observedProperty-->
+      <tr>
+        <th>{{OBSERVATION_NAMES.observedProperty}}</th>
+        <td>{{summary.missingValues.observedProperty}}</td>
+      </tr>
+      <!--resultTime-->
+      <tr>
+        <th>{{OBSERVATION_NAMES.resultTime}}</th>
+        <td>{{summary.missingValues.resultTime}}</td>
+      </tr>
+    </table>
+  </div>
+  
+  <!--
+    Unique values
+  -->
+  <br>
+  <h2>Summary of unique values</h2>
+  <table>
+    <tr>
+      <th></th>
+      <th>Number of unique values</th>
+      <th>Example values</th>
+    </tr>
+    <!--unit-->
+    <tr>
+      <th>{{OBSERVATION_NAMES.unit}}</th>
+      <td *ngIf="summary.missingValues">{{summary.missingValues.unit}}</td>
+      <td>{{summary.uniqueUnits.size}}</td>
+      <td>
+        <span *ngFor="let e of getFiveExamples(summary.uniqueUnits)">{{e}}<br></span>
+        <span *ngIf="summary.uniqueUnits.size > 5">...</span>
+      </td>
+    </tr>
+    <!--madeBySensor-->
+    <tr>
+      <th>{{OBSERVATION_NAMES.madeBySensor}}</th>
+      <td *ngIf="summary.missingValues">{{summary.missingValues.madeBySensor}}</td>
+      <td>{{summary.uniqueSensors.size}}</td>
+      <td>
+        <span *ngFor="let e of getFiveExamples(summary.uniqueSensors)">{{e}}<br></span>
+        <span *ngIf="summary.uniqueSensors.size > 5">...</span>
+      </td>
+    </tr>
+    <!--observedProperty-->
+    <tr>
+      <th>{{OBSERVATION_NAMES.observedProperty}}</th>
+      <td *ngIf="summary.missingValues">{{summary.missingValues.observedProperty}}</td>
+      <td>{{summary.uniqueObservedProperties.size}}</td>
+      <td>
+        <span *ngFor="let e of getFiveExamples(summary.uniqueObservedProperties)">{{e}}<br></span>
+        <span *ngIf="summary.uniqueObservedProperties.size > 5">...</span>
+      </td>
+    </tr>
+  </table>  
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>Close</button>
+</div>
+
+

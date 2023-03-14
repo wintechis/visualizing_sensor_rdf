@@ -1,0 +1,29 @@
+
+<div style="width: 100%;">
+    <div class="vertical-center-box">
+        <div class="vertically-centered">
+            <app-filter-statement
+                [data]="data"
+                (filterEmitter)="recieveFilterStatement(0, $event)"
+                [resetEventEmitter]="resetEventSender">
+            </app-filter-statement>
+        </div>
+        <div class="vertically-centered">
+            <button mat-button *ngIf="filters.length > 0" (click)="deleteFilterStatement(0)" color="warn" class="delete">Delete</button>
+        </div>
+    </div>
+</div>
+
+<div *ngFor="let f of filters; index as i;">
+    <div class="vertical-center-box">
+        <div class="vertically-centered">
+            <app-filter-statement
+                [data]="data"
+                (filterEmitter)="recieveFilterStatement(i + 1, $event)">
+            </app-filter-statement>
+        </div>
+        <div class="vertically-centered">
+            <button mat-button *ngIf="filters.length > i + 1" (click)="deleteFilterStatement(i + 1)"  color="warn" class="delete">Delete</button>
+        </div>
+    </div>
+</div>
