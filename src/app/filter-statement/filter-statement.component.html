@@ -1,60 +1,59 @@
 
-<!--
-  Column
--->
-<app-select
-  label="Select column"
-  [options]="OBSERVATION_COL_NAMES"
-  (selectionChange)="selectionChange($event)"
-  [resetEventEmitter]="resetEventSender"
-  class="vertically-centered">
-</app-select>
-<!--
-  Operator
--->
-<app-select 
-    *ngIf="columnName && operatorOptions"
-    label="Select operator"
-    [options]="operatorOptions"
-    (selectionChange)="selectionChangeOperator($event)"
+
+<table [style]="(operator && columnName == 'Result time') ? '' : 'margin-bottom: 5px; margin-top: 5px;'"><tr>
+  <!--
+    Column
+  -->
+  <td><app-select
+    label="Select column"
+    [options]="OBSERVATION_COL_NAMES"
+    (selectionChange)="selectionChange($event)"
+    [resetEventEmitter]="resetEventSender"
     class="vertically-centered">
-</app-select>
+  </app-select></td>
+  <!--
+    Operator
+  -->
+  <td *ngIf="columnName && operatorOptions"><app-select 
+      label="Select operator"
+      [options]="operatorOptions"
+      (selectionChange)="selectionChangeOperator($event)"
+      class="vertically-centered">
+  </app-select></td>
 
-<!--
-  Value
--->
-<!--discrete value-->
-<div class="vertically-centered">
-  <mat-form-field *ngIf="operator && columnName && isDiscrete(columnName)" appearance="fill"> <!--style="width: fit-content; margin-bottom: 5px;"-->
-    <mat-label>Value</mat-label>
-    <input type="text"
-           placeholder="Pick one"
-           aria-label="Number"
-           matInput
-           [formControl]="discreteAutocompleteControl"
-           [matAutocomplete]="auto"
-           [(ngModel)]="discreteValue">
-    <mat-autocomplete #auto="matAutocomplete">
-      <mat-option *ngFor="let option of filteredDiscreteOptions | async" [value]="option">{{option}}</mat-option>
-    </mat-autocomplete>
-  </mat-form-field>
-</div>
+  <!--
+    Value
+  -->
+  <!--discrete value-->
+  <td *ngIf="operator && columnName && isDiscrete(columnName)" appearance="fill"><div class="vertically-centered">
+      <mat-form-field>
+        <mat-label>Value</mat-label>
+        <input type="text"
+               placeholder="Pick one"
+               aria-label="Number"
+               matInput
+               [formControl]="discreteAutocompleteControl"
+               [matAutocomplete]="auto"
+               [(ngModel)]="discreteValue">
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let option of filteredDiscreteOptions | async" [value]="option">{{option}}</mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+  </div></td>
 
-<!--numerical value-->
-<div class="vertically-centered">
-  <mat-form-field *ngIf="operator && columnName == 'Numerical value'"> <!--style="width: fit-content; margin-bottom: 5px;"-->
-      <mat-label>Value</mat-label>
-      <input type="number"
-        matInput
-        [(ngModel)]="numericalValue"
-        [ngModelOptions]="{standalone: true}">
-  </mat-form-field>
-</div>
+  <!--numerical value-->
+  <td *ngIf="operator && columnName == 'Numerical value'"><div class="vertically-centered">
+    <mat-form-field>
+        <mat-label>Value</mat-label>
+        <input type="number"
+          matInput
+          [(ngModel)]="numericalValue"
+          [ngModelOptions]="{standalone: true}">
+    </mat-form-field>
+  </div></td>
 
-<!--time-->
-<div class="vertically-centered" *ngIf="operator && columnName == 'Result time'" > 
-  
-  <div class="vertically-centered">
+  <!--time-->
+  <td *ngIf="operator && columnName == 'Result time'"><div class="vertically-centered"> 
     <div style="width: fit-content;  border: solid; border-color: rgba(0,0,0,.04); border-width: 3px; border-radius: 5px 5px 0px 0px;">
       <input
         placeholder="yyyy-mm-dd"
@@ -64,19 +63,20 @@
         #d="ngbDatepicker"/>
       <button (click)="d.toggle(); openedDatepicker(d)" class="date">Choose</button>
     </div>
-  </div>
-
-  <div class="vertically-centered" style="margin-left: 4px;">
+  </div></td>
+  <td *ngIf="operator && columnName == 'Result time'"><div class="vertically-centered">
     <ngb-timepicker
       [(ngModel)]="time"
       [seconds]="true">
     </ngb-timepicker> 
-  </div>
-</div>
+  </div></td>
 
-<!--
-  Submit button
--->
-<div class="vertically-centered" *ngIf="operator && columnName && isValidInput()">
-  <button mat-button (click)="submit()" color="primary" style=" margin-left: 4px;">Submit</button>
-</div>
+
+  <!--
+    Submit button
+  -->
+  <td *ngIf="operator && columnName && isValidInput()"><div class="vertically-centered">
+    <button mat-button (click)="submit()" color="primary">Submit</button>
+  </div></td>
+
+</tr></table>
